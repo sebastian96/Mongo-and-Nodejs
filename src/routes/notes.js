@@ -32,6 +32,7 @@ router.post('/notes/add-note', async(req, res) => {
             description
         });
         await newNote.save();
+        req.flash('successMsg', 'Note added successfully');
         res.redirect('/notes');
     }
 });
@@ -44,11 +45,13 @@ router.get('/notes/edit/:id', async(req, res) => {
 router.put('/notes/edit-note/:id', async (req, res) => {
     const { title, description } = req.body;
     await Note.findByIdAndUpdate(req.params.id, { title, description });
+    req.flash('successMsg', 'Note update successfully');
     res.redirect('/notes');
 });
 
 router.delete('/notes/delete-note/:id', async (req, res) => {
     await Note.findByIdAndDelete(req.params.id);
+    req.flash('successMsg', 'Note deleted successfully');
     res.redirect('/notes');
 })
 
